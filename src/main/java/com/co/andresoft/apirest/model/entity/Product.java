@@ -36,7 +36,7 @@ public class Product implements Serializable{
 	
 	@JsonIgnore
 	@Column(name = "category_id", nullable = false)
-	private Long categoryId;
+	private Long category_id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -50,14 +50,14 @@ public class Product implements Serializable{
 	
 	public Product() {}
 
-	public Product(Long id, String name, Double price, String description, Long categoryId, 
+	public Product(Long id, String name, Double price, String description, Long category_id, 
 			Category category,List<Provider> providers) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
-		this.categoryId = categoryId;
+		this.category_id = category_id;
 		this.category = category;
 		this.providers = providers;
 	}
@@ -94,12 +94,12 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public Long getCategory_id() {
+		return category_id;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory_id(Long category_id) {
+		this.category_id = category_id;
 	}
 
 	public Category getCategory() {

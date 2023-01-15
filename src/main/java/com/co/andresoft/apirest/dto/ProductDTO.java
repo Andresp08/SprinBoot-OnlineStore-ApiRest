@@ -5,6 +5,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class ProductDTO {
 
@@ -22,18 +25,31 @@ public class ProductDTO {
 	@Size(min = 10)
 	private String description;
 	
-	private Long categoryId;
+	private Long category_id;
 	
 	public ProductDTO() {}
+	
+	@JsonCreator
+    public ProductDTO(@JsonProperty("id") Long id,
+                      @JsonProperty("name") String name,
+                      @JsonProperty("price") Double price,
+                      @JsonProperty("description") String description,
+                      @JsonProperty("categoryId") Long category_id){
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category_id = category_id;
+    }
 
-	public ProductDTO(Long id, String name, Double price,String description, Long categoryId) {
+	/*public ProductDTO(Long id, String name, Double price,String description, Long categoryId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		this.categoryId = categoryId;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -67,12 +83,12 @@ public class ProductDTO {
 		this.description = description;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public Long getCategory_id() {
+		return category_id;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory_id(Long category_id) {
+		this.category_id = category_id;
 	}
 	
 }
