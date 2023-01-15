@@ -3,6 +3,7 @@ package com.co.andresoft.apirest.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
@@ -31,8 +34,12 @@ public class Product implements Serializable{
 	
 	private String description;
 	
+	@JsonIgnore
+	@Column(name = "category_id", nullable = false)
+	private Long categoryId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id", nullable = false)
+	@JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Category category;
 	
 	@ManyToMany
@@ -43,13 +50,14 @@ public class Product implements Serializable{
 	
 	public Product() {}
 
-	public Product(Long id, String name, Double price, String description, Category category,
-			List<Provider> providers) {
+	public Product(Long id, String name, Double price, String description, Long categoryId, 
+			Category category,List<Provider> providers) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
+		this.categoryId = categoryId;
 		this.category = category;
 		this.providers = providers;
 	}
@@ -86,6 +94,14 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public Category getCategory() {
 		return category;
 	}
@@ -101,4 +117,5 @@ public class Product implements Serializable{
 	public void setProviders(List<Provider> providers) {
 		this.providers = providers;
 	}
+	
 }
